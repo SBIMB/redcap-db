@@ -8,12 +8,9 @@ ENV MYSQL_PASS redcap
 
 # Install packages
 RUN apt-get update && \
-  apt-get -y install supervisor \
-  git \
+  apt-get -y git \
   mysql-server \
   nano \
-  && \
-  ssmtp \
 
 # Set LOG Directories
 RUN mkdir /var/log/export && chgrp adm /var/log/export
@@ -28,8 +25,8 @@ ADD my.cnf /etc/mysql/conf.d/my.cnf
 
 # Configure supervisord to manage processes (otherwise a docker instance can only run 1 process)
 #ADD supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
-ADD supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
-ADD supervisord-cron.conf /etc/supervisor/conf.d/supervisord-cron.conf
+#ADD supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
+#ADD supervisord-cron.conf /etc/supervisor/conf.d/supervisord-cron.conf
 
 # Remove pre-installed database
 RUN rm -rf /var/lib/mysql/*
